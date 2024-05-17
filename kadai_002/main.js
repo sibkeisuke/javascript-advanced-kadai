@@ -2,7 +2,6 @@
 let untyped = '';
 let typed = '';
 let score = 0;
-let wordcount = 0;
 
 //必要なHTML要素の取得
 const untypedfield = document.getElementById('untyped');
@@ -53,8 +52,7 @@ const keyPress = e => {
 
   //正タイプの場合
   score++;
-  wordcount++;
-  wordCount.textContent = wordcount;
+  wordCount.textContent = score;
   typed += untyped.substring(0, 1);
   untyped = untyped.substring(1);
   typedfield.textContent = typed;
@@ -83,11 +81,12 @@ const rankCheck = score => {
 
 //ゲームを終了
 const gameOver = id => {
+  clearInterval(id);
+  typedfield.textContent = '';
+  untypedfield.textContent = 'タイムアップ！';
   setTimeout(() => {
-    clearInterval(id);
     const result = confirm(rankCheck(score));
     if (result == true) {
-      untypedfield.textContent = 'タイムアップ！';
       window.location.reload();
     }
   }, 10);
